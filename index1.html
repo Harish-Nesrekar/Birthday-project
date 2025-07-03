@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Open the box</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at bottom, #0d1b2a 0%, #000000 100%);
+      overflow: hidden;
+      perspective: 1000px;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .scene {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 1;
+      padding-bottom: 100px;
+    }
+
+    .table {
+      width: 420px;
+      height: 30px;
+      background: linear-gradient(to bottom, #6e4b2c, #3d2b1f);
+      transform: rotateX(15deg);
+      transform-style: preserve-3d;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .table-legs {
+      position: absolute;
+      top: 30px;
+      width: 100%;
+      height: 160px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+
+    .leg {
+      width: 20px;
+      height: 100%;
+      background: linear-gradient(to bottom, #4e342e, #2f1b16);
+      border-radius: 5px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.7);
+    }
+
+    .delivery-box {
+      width: 100px;
+      height: 70px;
+      background: linear-gradient(to bottom, #f5d3a0, #c49b6e);
+      border: 2px solid #a67c52;
+      border-radius: 5px;
+      position: absolute;
+      top: -70px;
+      left: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 5px 10px 20px rgba(0,0,0,0.6);
+      transform: rotateX(5deg) rotateZ(-2deg);
+      z-index: 3;
+      cursor: pointer;
+    }
+
+    .paper {
+      position: absolute;
+      width: 200px;
+      height: 120px;
+      background: #fff;
+      color: #333;
+      top: -70px;
+      left: 110px;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(0);
+      transition: transform 1s ease, opacity 1s ease;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+      padding: 15px;
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .paper.show {
+      transform: translateY(-150px);
+      opacity: 1;
+    }
+
+    .glow {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 20px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 80%);
+      border-radius: 50%;
+      filter: blur(4px);
+      z-index: 0;
+    }
+
+    .title {
+      position: absolute;
+      top: 30px;
+      width: 100%;
+      text-align: center;
+      color: #ffffffcc;
+      font-size: 2.5rem;
+      z-index: 2;
+      text-shadow: 0 0 10px #000;
+    }
+
+    .proceed-button {
+      position: absolute;
+      top: 70px;
+      left: 110px;
+      padding: 10px 20px;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 1s ease, transform 1s ease;
+      z-index: 4;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+
+    .proceed-button.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔊 Audio Element for Click Sound -->
+  <audio id="clickSound">
+    <source src="paper.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="stars" id="starField"></div>
+
+  <div class="scene">
+    <div class="table">
+      <div class="delivery-box"><i>Delivery-box</i></div>
+      <div class="paper" id="paper">
+        <p>Thank you for your time and accepting the delivery mam..</p>
+      </div>
+      <button id="proceedBtn" class="proceed-button">Can we proceed further?</button>
+      <div class="table-legs">
+        <div class="leg"></div>
+        <div class="leg"></div>
+      </div>
+    </div>
+    <div class="glow"></div>
+  </div>
+
+  <script>
+    // Create glittering stars
+    const starField = document.getElementById('starField');
+    const starCount = 150;
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 2}s`;
+      star.style.opacity = Math.random();
+      starField.appendChild(star);
+    }
+
+    // Paper animation and sound on box click
+    const box = document.querySelector('.delivery-box');
+    const paper = document.getElementById('paper');
+    const proceedBtn = document.getElementById('proceedBtn');
+    const clickSound = document.getElementById('clickSound');
+
+    box.addEventListener('click', () => {
+      // Play sound
+      clickSound.currentTime = 0;
+      clickSound.play();
+
+      // Show paper
+      paper.classList.add('show');
+
+      // Show the button after a delay
+      setTimeout(() => {
+        proceedBtn.classList.add('show');
+      }, 1200);
+
+      // Button redirect
+      proceedBtn.onclick = () => {
+        window.location.href = 'index2.html';
+      };
+    });
+  </script>
+</body>
+</html>

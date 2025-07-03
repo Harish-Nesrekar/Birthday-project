@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Just for You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: black;
+    }
+
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    audio {
+      display: none;
+    }
+
+    .card {
+      color: white;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 30px;
+      border-radius: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    /* Hide scrollbar but allow scrolling */
+    .card::-webkit-scrollbar {
+      width: 0;
+    }
+    .card {
+      -ms-overflow-style: none;  /* IE & Edge */
+      scrollbar-width: none;     /* Firefox */
+    }
+
+    .card h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    #message {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .footer {
+      font-style: italic;
+      color: #cccccc;
+      display: none;
+      margin-top: 20px;
+    }
+
+    #ca {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff4d88;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      transition: all 0.3s ease;
+      display: none;
+    }
+
+    #ca:hover {
+      background-color: #e6005c;
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    #ca a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #ca img {
+      margin-right: 10px;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video autoplay muted loop>
+    <source src="vecteezy_dark-modern-creative-opening-flower-video_38999652.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Background Music -->
+  <audio id="bgAudio" autoplay loop>
+    <source src="flower-baground.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Birthday Wish Card -->
+  <div class="card">
+    <h1>Happy Birthday, My Love ❤️</h1>
+    <div id="message"></div>
+    <div class="footer" id="footer"><b>Thank you for being in my life. I love you more than words can say. 💖</b></div>
+  </div>
+
+  <!-- Button -->
+  <button id="ca">
+    <a href="index3.html">
+      let's celebrate this happy moment☺️
+    </a>
+  </button>
+
+  <script>
+    const fullMessage = `
+Do you know why you were born? Maybe you don’t — but let me tell you. Everything in this universe happens for a reason. That’s why you were born… and that’s why we collided in this vast universe.
+
+Out of all the people in this world, why did I choose you, and why did you choose me? Because this bond — our connection — was written before we even existed.
+
+Yes, we fight a lot. We argue, we get mad, we pull away... But no matter what, we always come back to each other — because deep down, our hearts know we belong together.
+
+The time I spend with you — through all the ups and downs — is unforgettable. You’re not just my girlfriend — you’re my favorite person, my peace, my chaos, and everything in between.
+
+And hey... You won’t get a perfect boy in this universe like me 😉 So it’s your good luck that you got me — don’t lose me.
+`;
+
+    const words = fullMessage.trim().split(' ');
+    const messageEl = document.getElementById("message");
+    const footer = document.getElementById("footer");
+    const button = document.getElementById("ca");
+
+    let index = 0;
+
+    function typeWord() {
+      if (index < words.length) {
+        messageEl.innerHTML += words[index] + " ";
+        messageEl.scrollTop = messageEl.scrollHeight;
+        index++;
+        setTimeout(typeWord, 150);
+      } else {
+        footer.style.display = "block";
+        button.style.display = "block";
+      }
+    }
+
+    window.onload = function () {
+      const audio = document.getElementById('bgAudio');
+      // Attempt to autoplay immediately (may still require user gesture on some browsers)
+      audio.play().catch(() => {
+        console.log("Autoplay blocked by browser.");
+      });
+      typeWord();
+    };
+  </script>
+
+</body>
+</html>

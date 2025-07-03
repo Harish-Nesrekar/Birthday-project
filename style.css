@@ -1,0 +1,214 @@
+
+:root {
+  --fall-speed: 11s;
+  /* Adjust this for speed */
+  --final-bottom: -53vh;
+  /* End position of candle base */
+}
+
+/* General Reset */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+}
+
+.background-vd {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+  overflow: hidden;
+  position: fixed;
+}
+
+.back-container {
+  display: none;
+}
+
+/* Text styling */
+.text {
+  color: #fe53bb;
+  margin-bottom: 70vh;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+/* Cake */
+#cake {
+  margin-bottom: 70vh;
+  position: fixed;
+}
+
+/* Center content */
+#uff {
+  background-color: #e91e63;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(233, 30, 99, 0.3);
+  position: fixed;
+  top: 85%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: showUff 1s ease-in-out 10s forwards;
+  font-family: 'Poppins', sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#uff:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: 0 12px 24px rgba(233, 30, 99, 0.5);
+}
+
+@keyframes showUff {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Cut button */
+#cut {
+  background-color: #bc1579;
+  position: fixed;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 30%;
+}
+
+/* Candles container */
+.candles-container {
+  display: flex;
+  /* IMPORTANT to make multiple candles visible */
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Individual candle */
+.candle {
+  display: flex;
+  /* Needed for flex layout */
+  flex-direction: column;
+  align-items: center;
+  width: 1vw;
+  min-width: 10px;
+  max-width: 20px;
+  margin: 0 1vw;
+  position: relative;
+  top: -180vh;
+  animation: fallDown var(--fall-speed) ease-out forwards;
+}
+
+/* Magical glittering wax */
+.wax {
+  background: linear-gradient(135deg, #e6ff71, #b4f1ff, #ffd6fa);
+  background-size: 200% 200%;
+  animation: glitter 2s infinite alternate;
+  width: 100%;
+  height: 15vh;
+  border-radius: 2px;
+}
+
+/* Wick of the candle */
+.wick {
+  background-color: #000;
+  width: 0.2vw;
+  height: 1vh;
+  margin-top: -1vh;
+}
+
+/* Flame */
+.flame {
+  width: 0.5vw;
+  height: 1.5vh;
+  background: radial-gradient(circle, yellow 0%, orange 70%, transparent 100%);
+  border-radius: 50%;
+  animation: flicker 1s infinite alternate;
+  margin-top: -1vh;
+}
+
+/* Candle falling animation */
+@keyframes fallDown {
+  to {
+    top: var(--final-bottom);
+  }
+}
+
+/* Magical glittering */
+@keyframes glitter {
+  0% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+
+  100% {
+    background-position: 100% 50%;
+    filter: brightness(1.3);
+  }
+}
+
+/* Flickering flame */
+@keyframes flicker {
+  0% {
+    transform: scale(1.1) translateY(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.2) translateY(-0.7vh);
+    opacity: 0.8;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .candle {
+    width: 4vw;
+  }
+
+  .flame {
+    width: 1vw;
+    height: 2vh;
+  }
+}
+
+
+/* page3 */
+/* From Uiverse.io by gksckt */
+.background-vd {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.back-container {
+  display: none;
+}
