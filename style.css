@@ -138,9 +138,9 @@ body {
 
 /* Flame */
 .flame {
-  width: 0.5vw;
-  height: 1.5vh;
-  background: radial-gradient(circle, yellow 0%, orange 70%, transparent 100%);
+  width: 1vw;
+  height: 4vh;
+  background: radial-gradient(ellipse, yellow 30%,red 40%, orange 30%, transparent 100%);
   border-radius: 50%;
   animation: flicker 1s infinite alternate;
   margin-top: -1vh;
